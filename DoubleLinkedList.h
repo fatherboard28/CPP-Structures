@@ -1,19 +1,19 @@
 #pragma once
-#include "LinearNode.h"
+#include "DoubleNode.h"
 #include <iostream>
 #include <string>
 
 
 namespace Structure {
 	template <typename T>
-	class LinkedList {
+	class DoubleLinkedList {
 	private:
-		LinearNode<T>* pHead;
-		LinearNode<T>* pTail;
+		DoubleNode<T>* pHead;
+		DoubleNode<T>* pTail;
 		int count;
 	public:
 		//Constructors & destructor----------------
-		LinkedList() {
+		DoubleLinkedList() {
 			count = 0;
 			pHead = NULL;
 			pTail = NULL;
@@ -23,34 +23,34 @@ namespace Structure {
 		//add-to-head
 		void AddToHead(T e) {
 			//create new node pointer
-			LinearNode<T>* node = new LinearNode<T>();
-
+			DoubleNode<T>* node = new DoubleNode<T>();
 
 			//set new node element
 			node->element = e;
 
-			//set new node pointer
+			//Making links
 			node->next = pHead;
+			pHead->prev = node;
 
 			//set new head
 			pHead = node;
 
 			//itterate count
 			count++;
-			
+
 		}
 
 		//add-to-tail
 		void AddToTail(T e) {
 			//New node
-			LinearNode<T>* node = new LinearNode<T>();
+			DoubleNode<T>* node = new DoubleNode<T>();
 
 			//set new node element
 			node->element = e;
 
-			//set prev node next to new node
-			LinearNode<T>* pTemp = GoTo(count - 1);
-			pTemp->next = node;
+			//Making Links
+			pTail->next = node;
+			node->prev = pTail;
 
 			//set tail to new node
 			pTail = node;
@@ -58,17 +58,17 @@ namespace Structure {
 			//increment count
 			count++;
 		}
-		
+
 		//remove-from-head
 		T RemoveFromHead() {
 			//check empty
 			if (IsEmpty()) {
-				std::cout << "ERROR: List empty. Connot Pop." <<std::endl;
+				std::cout << "ERROR: List empty. Connot Pop." << std::endl;
 				return NULL;
 			}
 			else {
 				//Temp node to pop
-				LinearNode<T>* pTemp = pHead;
+				DoubleNode<T>* pTemp = pHead;
 
 				//set head to current head next
 				pHead = pHead->next;
@@ -87,17 +87,17 @@ namespace Structure {
 		//remove-from-tail
 		T RemoveFromTail() {
 			//check empty
-			if (IsEmpty()){
-				std::cout << "ERROR: List empty. Connot Pop." <<std::endl;
+			if (IsEmpty()) {
+				std::cout << "ERROR: List empty. Connot Pop." << std::endl;
 				return NULL;
 			}
 			else {
 				//Temp node to pop
-				LinearNode<T>* pTemp = pTail;
+				DoubleNode<T>* pTemp = pTail;
 
 				//set tail to node before current tail
-				pTail = GoTo(count - 2);
-				
+				pTail = pTail->prev;
+
 				T returnVal = pTemp->element;
 
 				free(pTemp);
@@ -119,14 +119,14 @@ namespace Structure {
 		}
 
 		//go-to
-		LinearNode<T>* GoTo(int index) {
+		DoubleNode<T>* GoTo(int index) {
 			if (IsEmpty())
 				return NULL;
 			if (count < index)
 				return NULL;
 
-			LinearNode<T>* node = pHead;
-			LinearNode<T>** dpNode = &node;
+			DoubleNode<T>* node = pHead;
+			DoubleNode<T>** dpNode = &node;
 
 			if (node == NULL)
 				return NULL;
