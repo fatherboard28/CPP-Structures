@@ -5,8 +5,9 @@ The purpose of this project was to learn more about pointers and coding / compil
 
 Project includes: 
 - Stack
-- Single Linked List
 - Queue
+- Single Linked List
+- Double Linked List
 
 Extra files included:
 - Single Linked Node
